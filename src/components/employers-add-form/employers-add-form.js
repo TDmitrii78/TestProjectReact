@@ -14,7 +14,7 @@ const EmployersAddForm = () => {
                     className="form-control new-post-label"/>
            
                 <button type="submit" 
-                    class="btn btn-outline-light">
+                    className="btn btn-outline-light">
                     Добавить
                 </button>
             </form>

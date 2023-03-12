@@ -3,21 +3,21 @@ import "./app-filter.css";
 const AppFilter = () => {
     return (
         <div className="btn-group">
-            <batton 
+            <button 
                 className="btn btn-light"
                 type="button">
                 Все сотрудники
-            </batton>
-            <batton 
+            </button>
+            <button 
                 className="btn btn-outline-light"
                 type="button">
                 На повышение
-            </batton>
-            <batton 
+            </button>
+            <button 
                 className="btn btn-outline-light"
                 type="button">
                 З/П больше 1000$
-            </batton>
+            </button>
         </div>
     );
 }
