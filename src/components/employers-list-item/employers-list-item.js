@@ -3,7 +3,7 @@ import { Component } from "react";
 
 class EmployeesListItem extends Component{
     constructor(props) {
-        super();
+        super(props);
         this.state = {
             increase: false,
             like: false
