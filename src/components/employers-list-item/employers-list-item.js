@@ -1,12 +1,12 @@
 import "./employers-list-item.css";
 import { Component } from "react";
 
-class EmployeesListItem extends Component{
+class EmployersListItem extends Component{
     constructor(props) {
         super(props);
         this.state = {
             increase: false,
-            like: false
+            like: false,
         }
     }
 
@@ -15,17 +15,16 @@ class EmployeesListItem extends Component{
             increase: !increase
         }));
     }
-
+     
     onLike = () => {
         this.setState(({like}) => ({
             like: !like
-        }))
+        }));
     }
 
     render() {
-        const {name, salary} = this.props;
-        const {increase} = this.state;
-        const {like} = this.state;
+        const {name, salary, onDelete} = this.props;
+        const {increase, like} = this.state;
         let classNames = "list-group-item d-flex justify-content-between";
 
         if (increase) {
@@ -48,7 +47,8 @@ class EmployeesListItem extends Component{
                     </button>
 
                     <button type="button"
-                            className="btn-trash btn-sm ">
+                        onClick={onDelete}
+                        className="btn-trash btn-sm ">
                         <i className="fas fa-trash"></i>
                     </button>
                     <i className="fas fa-star"></i>
@@ -59,4 +59,4 @@ class EmployeesListItem extends Component{
 }
     
 
-export default EmployeesListItem;
+export default EmployersListItem;
