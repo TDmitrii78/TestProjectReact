@@ -13,15 +13,47 @@ class App extends Component{
         super(props);
         this.state = {
             data: [
-                {name: "John Smith", salary: 1000, increase: false, id: "1"},
-                {name: "Ivan Ivanov", salary: 1500, increase: true, id: "2"},
-                {name: "Vasiliy V", salary: 700, increase: false, id: "3"}
-            ]
+                {name: "John Smith", salary: 1000, increase: true, rise: false, id: "1"},
+                {name: "Ivan Ivanov", salary: 1500, increase: true, rise: false, id: "2"},
+                {name: "Vasiliy V", salary: 700, increase: false, rise: false, id: "3"}
+            ],
+            searchName: ""
         }
         this.newId = 4;
+        this.increase = () => {return this.state.data.filter(el => el.increase === true).length}
+        
     }
 
+    searchEmployers = (searchName) => {
+        this.setState(() => ({
+            searchName: searchName
+        }))
+    }
 
+    onToggleIncrease = (id) => {
+        this.setState(({data}) => {
+            return  {
+                data: data.map(el => {
+                            if (el.id === id) {
+                                return {...el, increase: !el.increase}
+                            }
+                            return el;
+                        })}
+        })
+    }
+
+    onToggleRise = (id) => {
+        this.setState(({data}) => {
+            return {
+                data: data.map(el => {
+                        if (el.id === id) {
+                            return {...el, rise: !el.rise}
+                        }
+                        return el;
+                    })
+            }
+        })   
+    }
 
     deleteItem = (id) => {
             this.setState(({data}) => ({
@@ -30,23 +62,34 @@ class App extends Component{
     }
 
     addEmployers = (name, salary) => {
-        const newEmployers = {name: `${name}`, salary: salary, increase: false, id: this.newId++};
+        const newEmployers = {name: `${name}`, salary: salary, increase: false, rise: false, id: this.newId++};
         this.setState(({data}) => ({
            data: data.concat(newEmployers)
         }));
     }
 
+    filterListEmployers = (data, searchName) => {
+        if (!searchName) {
+            return data;
+        }
+        return data.filter(el => el.name.includes(searchName));
+    }
+
     render() {
-        const {data} = this.state;
+        const {data, searchName} = this.state;
+        const visible = this.filterListEmployers(data, searchName);
+        console.log(visible);
         return (
             <div className="app">
-                <AppInfo/>
+                <AppInfo increase={this.increase()} quantity={data.length}/>
                 <div className="search-panel">
-                    <SearchPanel/>
+                    <SearchPanel searchEmployers={(searchName) => this.searchEmployers(searchName)}/>
                     <AppFilter/>
                 </div>
                 <EmployersList 
-                    data={data} 
+                    data={visible} 
+                    onToggleIncrease={(id) => this.onToggleIncrease(id)}
+                    onToggleRise={(id) => this.onToggleRise(id)}
                     onDelete={(id) => this.deleteItem(id)} />
                 <EmployersAddForm 
                     onAdd={(name, salary) => this.addEmployers(name, salary)}/>
